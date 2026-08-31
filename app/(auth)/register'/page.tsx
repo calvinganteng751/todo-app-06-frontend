@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import RegisterForm from "./components/RegisterForm";
-
+import RegisterForm from "./components/RegisterForm/RegisterForm";
 export default function RegisterPage() {
   return (
     <main className="min-h-screen p-8 bg-gray-100 flex items-center justify-center">
