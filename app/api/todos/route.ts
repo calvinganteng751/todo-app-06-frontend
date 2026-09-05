@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getTasks } from "@/lib/tasks";
-import { todoService } from "@/services/todoService";
 import { ApiResponse } from "@/types/api-todo";
 
 export async function GET(request: NextRequest) {
@@ -63,11 +62,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newTodo = await todoService.createTodo({
-      todo: body.todo,
-      completed: Boolean(body.completed),
-      userId: Number(body.userId) || 1,
+    // Simulasi Create ke DummyJSON langsung via fetch (tanpa service layer)
+    const response = await fetch("https://dummyjson.com/todos/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        todo: body.todo,
+        completed: Boolean(body.completed),
+        userId: Number(body.userId) || 1,
+      }),
     });
+
+    const newTodo = await response.json();
 
     return NextResponse.json(
       {
